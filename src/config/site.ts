@@ -37,24 +37,24 @@ interface SiteConfig {
 
 export const site = {
   name: 'Samyukta Technology',
-  legalName: 'Samyukta Technologies Pvt. Ltd.',
-  tagline: 'Software that moves businesses forward',
+  legalName: 'Samyukta Technology Pvt. Ltd.',
+  tagline: 'Digital Innovation',
   description:
-    'Samyukta Technologies builds fast, reliable web and mobile products for growing businesses in Nepal and beyond.',
+    'Samyukta Technology builds MVPs, custom software, websites and IT solutions for growing businesses in Nepal and beyond.',
   lang: 'en',
   locale: 'en_US',
-  titleTemplate: '%s | Samyukta Technologies',
+  titleTemplate: '%s | Samyukta Technology',
   defaultOgImage: '/og-default.png',
   logo: '/logo.svg',
-  themeColor: '#0f172a',
-  foundingYear: 2020,
+  themeColor: '#079669',
+  foundingYear: 2020, // TODO: confirm — not stated on the live site
 
   contact: {
-    email: 'hello@example.com',
-    phone: '+977-1-0000000',
+    email: 'info@samyukta.tech',
+    phone: '+977-9851447974',
     address: {
-      street: 'Example Marg',
-      city: 'Kathmandu',
+      street: 'Balkumari Mandir',
+      city: 'Lalitpur',
       region: 'Bagmati',
       postalCode: '44600',
       country: 'NP',
@@ -62,8 +62,8 @@ export const site = {
   },
 
   social: {
-    linkedin: 'https://www.linkedin.com/company/example',
-    github: 'https://github.com/example',
+    linkedin: 'https://www.linkedin.com/company/samyukta-technology',
+    facebook: 'https://www.facebook.com/profile.php?id=61580596401928',
   },
 
   twitterHandle: '',

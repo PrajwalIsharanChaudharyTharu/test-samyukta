@@ -2,6 +2,8 @@
 import '@styles/global.css';
 import { cx } from '@lib/utils';
 import { site } from '@/config/site';
+import SEO from '@/components/seo/SEO.astro';
+import { pages } from '@/config/pages';
 
 const isActive = true;
 const socials = Object.entries(site.social);
@@ -13,8 +15,8 @@ const socials = Object.entries(site.social);
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>Astro</title>
+    <!-- <meta name="generator" content={Astro.generator} /> -->
+    <SEO seo={pages.home} />
   </head>
   <body>
     <h1>Astro</h1>
