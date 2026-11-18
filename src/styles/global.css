@@ -1,0 +1,45 @@
+@import 'tailwindcss';
+@plugin '@tailwindcss/typography';
+
+/*
+ * DESIGN TOKENS — the only place colours, fonts, radii and sizes are defined.
+ * Rule for the team: never write bg-[#1e40af] in a component. Add a token here instead.
+ */
+@theme {
+  --color-*: initial;
+  --color-white: #fff;
+  --color-black: #000;
+
+  /* ──── Brand scale (Primitive Colors) ──── */
+  --color-brand-600: #2563eb; /* placeholder — replace with your brand colour */
+
+  /* ──── Semantic tokens (what the color is for) ──── */
+  --color-ink: #0f172a; /* main body text colour */
+
+  /* ──── Typography tokens ──── */
+  --font-sans: 'Inter', sans-serif, 'manrope';
+
+  /* ──── Shape & Layout tokens ──── */
+}
+@layer base {
+  html {
+    @apply text-ink scroll-smooth bg-white antialiased;
+  }
+
+  /* Visible focus ring for keyboard users (accessibility score) */
+  :focus-visible {
+    @apply outline-brand-600 outline-2 outline-offset-2;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
