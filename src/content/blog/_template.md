@@ -4,7 +4,7 @@ title: Post title (max 70 chars)
 description: 70–160 characters. This is the meta description AND the intro under the H1.
 pubDate: 2026-01-01
 # updatedDate: 2026-01-15
-author: ram-sharma # must match a file name in src/content/team
+author: Ram Sharma # author's display name
 cover: ../../assets/images/blog-astro.jpg
 coverAlt: Describe what the image shows
 tags: [Engineering]

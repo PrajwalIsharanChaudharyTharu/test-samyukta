@@ -1,0 +1,25 @@
+---
+import PageLayout from '@layouts/PageLayout.astro';
+import Container from '@components/layout/Container.astro';
+import { pages } from '@config/pages';
+import { routes } from '@config/routes';
+import { getServices } from '@lib/content';
+
+const services = await getServices();
+---
+
+<PageLayout
+  seo={pages.services}
+  heading="Services"
+  intro="The capabilities we bring to every engagement."
+  breadcrumbs={[{ label: 'Services', href: routes.services() }]}
+>
+  <Container class="grid gap-6 py-16 md:grid-cols-3">
+    {services.map((s) => (
+      <article class="rounded-(--radius-card) border border-line p-6">
+        <h2 class="text-lg font-semibold">{s.data.title}</h2>
+        <p class="mt-2 text-muted">{s.data.summary}</p>
+      </article>
+    ))}
+  </Container>
+</PageLayout>

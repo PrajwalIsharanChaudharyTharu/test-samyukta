@@ -7,7 +7,7 @@
  *
  * Files starting with "_" are ignored, which is how the _template.md files work.
  */
-import { defineCollection, reference } from 'astro:content';
+import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 
@@ -74,7 +74,7 @@ const blog = defineCollection({
       description: z.string().min(70).max(160),
       pubDate: z.coerce.date(),
       updatedDate: z.coerce.date().optional(),
-      author: reference('team'),
+      author: z.string().min(2),
       cover: image(),
       coverAlt: z.string().min(5),
       tags: z.array(z.string()).default([]),
