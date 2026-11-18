@@ -19,6 +19,8 @@
     "*.{astro,ts,js,mjs,json,md,mdx,css}": "prettier --write"
   },
   "dependencies": {
+    "@astrojs/markdown-satteri": "^0.4.10",
+    "@astrojs/mdx": "^8.1.6",
     "@tailwindcss/typography": "^0.5.20",
     "@tailwindcss/vite": "^4.3.5",
     "astro": "^7.4.12",
