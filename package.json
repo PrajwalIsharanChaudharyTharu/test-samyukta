@@ -12,13 +12,21 @@
     "astro": "astro",
     "check": "astro check",
     "format": "prettier --write .",
-    "lint:format": "prettier --check ."
+    "lint:format": "prettier --check .",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{astro,ts,js,mjs,json,md,mdx,css}": "prettier --write"
   },
   "dependencies": {
     "astro": "^7.4.12"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.12",
+    "@commitlint/cli": "^21.2.4",
+    "@commitlint/config-conventional": "^21.2.4",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.6.1",
     "prettier": "^3.10.1",
     "prettier-plugin-astro": "^1.1.2",
     "prettier-plugin-tailwindcss": "^0.8.1",
