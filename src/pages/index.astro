@@ -1,4 +1,6 @@
 ---
+import { cx } from '@lib/utils';
+const isActive = true;
 ---
 
 <html lang="en">
@@ -12,5 +14,6 @@
   </head>
   <body>
     <h1>Astro</h1>
+    <h1 class={cx('title', isActive && 'active')}>Alias works</h1>
   </body>
 </html>
