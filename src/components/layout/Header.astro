@@ -2,30 +2,64 @@
 import { site } from '@config/site';
 import { mainNav, routes } from '@config/routes';
 import { isActivePath } from '@lib/nav';
+import Container from './Container.astro';
+import Button from '@components/ui/Button.astro';
 
 const path = Astro.url.pathname;
+const mobileNav = [...mainNav, { label: 'Start a project', href: routes.contact() }];
 ---
 
-<header class="border-b border-line">
-  <nav
-    aria-label="Main"
-    class="mx-auto flex h-16 max-w-(--container-content) items-center justify-between px-6"
-  >
-    <a href={routes.home()} class="font-bold">
+<header class="sticky top-0 z-40 border-b border-line bg-white/90 backdrop-blur">
+  <Container class="flex h-16 items-center justify-between">
+    <a href={routes.home()} class="text-lg font-bold tracking-tight">
       {site.name}
     </a>
-    <ul class="flex gap-6 text-sm">
-      {mainNav.map((item) => (
-        <li>
-          <a
-            href={item.href}
-            aria-current={isActivePath(path, item.href) ? 'page' : undefined}
-            class="text-muted hover:text-ink aria-[current=page]:font-semibold aria-[current=page]:text-brand-600"
-          >
-            {item.label}
-          </a>
-        </li>
-      ))}
-    </ul>
-  </nav>
+
+    <nav aria-label="Main" class="hidden md:block">
+      <ul class="flex items-center gap-8 text-sm font-medium">
+        {mainNav.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              aria-current={isActivePath(path, item.href) ? 'page' : undefined}
+              class="text-muted transition-colors hover:text-ink aria-[current=page]:text-brand-600"
+            >
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="hidden md:block">
+      <Button href={routes.contact()} size="sm">
+        Start a project
+      </Button>
+    </div>
+
+    <!-- Mobile: native <details>, so no JavaScript is shipped -->
+    <details class="relative md:hidden">
+      <summary class="cursor-pointer list-none rounded-md px-3 py-2 text-sm font-medium [&::-webkit-details-marker]:hidden">
+        Menu
+      </summary>
+      <nav
+        aria-label="Mobile"
+        class="absolute right-0 mt-2 w-56 rounded-(--radius-card) border border-line bg-white p-3 shadow-lg"
+      >
+        <ul>
+          {mobileNav.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                aria-current={isActivePath(path, item.href) ? 'page' : undefined}
+                class="block rounded-md px-3 py-2 text-sm hover:bg-surface aria-[current=page]:text-brand-600"
+              >
+                {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </details>
+  </Container>
 </header>

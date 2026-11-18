@@ -1,0 +1,12 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import { cx } from '@lib/utils';
+
+type Props = HTMLAttributes<'div'> & { as?: 'div' | 'section' | 'article' | 'nav' };
+
+const { as: Tag = 'div', class: className, ...rest } = Astro.props;
+---
+
+<Tag class={cx('mx-auto w-full max-w-(--container-content) px-5 md:px-8', className)} {...rest}>
+  <slot />
+</Tag>

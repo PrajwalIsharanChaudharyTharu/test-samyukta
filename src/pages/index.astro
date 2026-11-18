@@ -1,86 +1,25 @@
 ---
-import '@styles/global.css';
-import { cx } from '@lib/utils';
-import { site } from '@/config/site';
-import SEO from '@/components/seo/SEO.astro';
-import { pages } from '@/config/pages';
-
-const isActive = true;
-const socials = Object.entries(site.social);
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Container from '@components/layout/Container.astro';
+import Button from '@components/ui/Button.astro';
+import { pages } from '@config/pages';
+import { routes } from '@config/routes';
+import { site } from '@config/site';
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" />
-    <meta name="viewport" content="width=device-width" />
-    <!-- <meta name="generator" content={Astro.generator} /> -->
-    <SEO seo={pages.home} />
-  </head>
-  <body>
-    <h1>Astro</h1>
-    <h1 class={cx('title', isActive && 'active')}>Alias works</h1>
-    <dl>
-      <div>
-        <dt>Tagline</dt>
-        <dd>{site.tagline}</dd>
+<BaseLayout seo={pages.home}>
+  <section class="bg-linear-to-b from-brand-50 to-white">
+    <Container class="py-20 md:py-28">
+      <h1 class="max-w-3xl text-4xl font-bold tracking-tight text-balance md:text-6xl">{site.tagline}</h1>
+      <p class="mt-6 max-w-2xl text-lg text-muted md:text-xl">{site.description}</p>
+      <div class="mt-10 flex flex-wrap gap-4">
+        <Button href={routes.contact()} size="lg">
+          Start a project
+        </Button>
+        <Button href={routes.projects()} size="lg" variant="secondary">
+          See our work
+        </Button>
       </div>
-      <div>
-        <dt>Description</dt>
-        <dd>{site.description}</dd>
-      </div>
-      <div>
-        <dt>Legal Name</dt>
-        <dd>{site.legalName}</dd>
-      </div>
-      <div>
-        <dt>Email</dt>
-        <dd>{site.contact.email}</dd>
-      </div>
-      <div>
-        <dt>Phone</dt>
-        <dd>{site.contact.phone}</dd>
-      </div>
-    </dl>
-    <dl>
-      <div>
-        <dt>Address</dt>
-        <dd>{site.contact.address.street}</dd>
-      </div>
-      <div>
-        <dd>{site.contact.address.city}</dd>
-      </div>
-      <div>
-        <dd>{site.contact.address.region}</dd>
-      </div>
-      <div>
-        <dd>{site.contact.address.postalCode}</dd>
-      </div>
-      <div>
-        <dd>{site.contact.address.country}</dd>
-      </div>
-    </dl>
-    <dl>
-      <div>
-        <dt>Website</dt>
-        <dd>{Astro.site?.href}</dd>
-      </div>
-      <div>
-        <dt>Founding Year</dt>
-        <dd>{site.foundingYear}</dd>
-      </div>
-    </dl>
-
-    <ul class="mt-8 flex gap-4">
-      {socials.map(([name, url]) => (
-        <li>
-          <a href={url} class="text-brand-600 capitalize">
-            {name}
-          </a>
-        </li>
-      ))}
-    </ul>
-  </body>
-  <footer class="mt-16 text-sm text-muted">{`© ${new Date().getFullYear()} ${site.legalName}`}</footer>
-</html>
+    </Container>
+  </section>
+</BaseLayout>

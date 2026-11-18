@@ -22,3 +22,7 @@ export function isActivePath(currentPath: string, href: string): boolean {
   if (href === routes.home()) return path === '/';
   return path === href || path.startsWith(`${href}/`);
 }
+export interface Crumb {
+  label: string;
+  href: string;
+}

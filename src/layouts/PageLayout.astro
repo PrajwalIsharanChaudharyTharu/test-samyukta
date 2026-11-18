@@ -1,0 +1,35 @@
+---
+/**
+ * PageLayout: BaseLayout + standard page header (breadcrumbs, <h1>, intro).
+ * Every inner page uses this. The home page uses BaseLayout directly.
+ */
+import BaseLayout from './BaseLayout.astro';
+import Container from '@components/layout/Container.astro';
+import Breadcrumbs from '@components/layout/Breadcrumbs.astro';
+import type { PageSeo } from '@lib/seo';
+import type { Crumb } from '@lib/nav';
+
+interface Props {
+  seo: PageSeo;
+  heading: string;
+  intro?: string | undefined;
+  breadcrumbs?: Crumb[];
+}
+
+const { seo, heading, intro, breadcrumbs = [] } = Astro.props;
+---
+
+<BaseLayout seo={seo}>
+  <slot name="head" slot="head" />
+
+  <header class="border-b border-line bg-surface">
+    <Container class="py-12 md:py-16">
+      {breadcrumbs.length > 0 && <Breadcrumbs items={breadcrumbs} />}
+      <h1 class="mt-4 text-4xl font-bold tracking-tight text-balance md:text-5xl">{heading}</h1>
+      {intro && <p class="mt-4 max-w-2xl text-lg text-pretty text-muted">{intro}</p>}
+      <slot name="header-extra" />
+    </Container>
+  </header>
+
+  <slot />
+</BaseLayout>
