@@ -25,10 +25,22 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
 
-  trailingSlash: 'never',
+  trailingSlash: 'always',
 
   build: {
-    format: 'file',
+    format: 'directory',
+  },
+
+  image: {
+    // Every <Image /> gets srcset + sizes automatically and never stretches past its width.
+    layout: 'constrained',
+    responsiveStyles: true,
+  },
+
+  // Load the next page in the background on hover/focus, so navigation feels instant.
+  prefetch: {
+    prefetchAll: true,
+    defaultStrategy: 'hover',
   },
 
   integrations: [mdx()],

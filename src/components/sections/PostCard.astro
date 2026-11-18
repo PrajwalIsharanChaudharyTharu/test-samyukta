@@ -1,0 +1,38 @@
+---
+import { Image } from 'astro:assets';
+import { routes } from '@config/routes';
+import type { Post } from '@lib/content';
+import { formatDate } from '@lib/utils';
+
+interface Props {
+  post: Post;
+  priority?: boolean;
+  headingLevel?: 'h2' | 'h3';
+}
+const { post, priority = false, headingLevel: Heading = 'h3' } = Astro.props;
+const { data } = post;
+---
+
+<article class="group relative flex flex-col overflow-hidden rounded-(--radius-card) border border-line bg-white">
+  <Image
+    src={data.cover}
+    alt={data.coverAlt}
+    width={800}
+    height={450}
+    sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+    class="aspect-video w-full object-cover"
+    loading={priority ? 'eager' : 'lazy'}
+    fetchpriority={priority ? 'high' : 'auto'}
+  />
+  <div class="flex flex-1 flex-col p-6">
+    <time datetime={data.pubDate.toISOString()} class="text-sm text-muted">
+      {formatDate(data.pubDate)}
+    </time>
+    <Heading class="mt-1 text-lg font-semibold">
+      <a href={routes.blogPost(post.id)} class="after:absolute after:inset-0">
+        {data.title}
+      </a>
+    </Heading>
+    <p class="mt-2 flex-1 text-muted">{data.description}</p>
+  </div>
+</article>

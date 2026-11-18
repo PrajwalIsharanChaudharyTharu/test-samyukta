@@ -34,38 +34,6 @@ const services = defineCollection({
   }),
 });
 
-// const team = defineCollection({
-//   loader: contentGlob('team'),
-//   schema: ({ image }) =>
-//     z.object({
-//       name: z.string(),
-//       role: z.string(),
-//       photo: image().optional(),
-//       order: z.number().int().default(100),
-//       linkedin: z.url().optional(),
-//     }),
-// });
-
-// const projects = defineCollection({
-//   loader: contentGlob('projects'),
-//   schema: ({ image }) =>
-//     z.object({
-//       title: z.string(),
-//       summary: z.string().max(200),
-//       client: z.string(),
-//       industry: z.string(),
-//       date: z.coerce.date(),
-//       cover: image(),
-//       coverAlt: z.string().min(5),
-//       stack: z.array(z.string()).default([]),
-//       results: z.array(z.object({ label: z.string(), value: z.string() })).default([]),
-//       services: z.array(reference('services')).default([]),
-//       featured: z.boolean().default(false),
-//       draft: z.boolean().default(false),
-//       seo,
-//     }),
-// });
-
 const blog = defineCollection({
   loader: contentGlob('blog'),
   schema: ({ image }) =>

@@ -1,0 +1,17 @@
+---
+interface Props {
+  href?: string | undefined;
+}
+const { href } = Astro.props;
+const base = 'inline-flex items-center rounded-full bg-brand-50 px-3 py-1 text-xs font-medium text-brand-700';
+---
+
+{href ? (
+  <a href={href} class:list={[base, 'hover:bg-brand-100']}>
+    <slot />
+  </a>
+) : (
+  <span class={base}>
+    <slot />
+  </span>
+)}

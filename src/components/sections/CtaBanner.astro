@@ -1,0 +1,28 @@
+---
+import { routes } from '@config/routes';
+import Container from '@components/layout/Container.astro';
+import Button from '@components/ui/Button.astro';
+
+interface Props {
+  title?: string;
+  body?: string;
+}
+const {
+  title = 'Have a project in mind?',
+  body = 'Tell us what you are building. We reply within one business day.',
+} = Astro.props;
+---
+
+<section class="mt-24">
+  <Container>
+    <div class="rounded-(--radius-card) bg-brand-900 px-8 py-14 text-center text-white md:px-16">
+      <h2 class="text-3xl font-bold tracking-tight text-balance">{title}</h2>
+      <p class="mx-auto mt-3 max-w-xl text-brand-100">{body}</p>
+      <div class="mt-8">
+        <Button href={routes.contact()} size="lg">
+          Start a project
+        </Button>
+      </div>
+    </div>
+  </Container>
+</section>

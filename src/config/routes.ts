@@ -7,19 +7,19 @@
  */
 export const routes = {
   home: () => '/',
-  about: () => '/about',
-  contact: () => '/contact',
+  about: () => '/about/',
+  contact: () => '/contact/',
 
-  services: () => '/services',
-  service: (slug: string) => `/services/${slug}`,
+  services: () => '/services/',
+  service: (slug: string) => `/services/${slug}/`,
 
-  projects: () => '/projects',
-  project: (slug: string) => `/projects/${slug}`,
+  projects: () => '/projects/',
+  project: (slug: string) => `/projects/${slug}/`,
 
-  blog: () => '/blog',
-  blogPage: (page: number) => (page <= 1 ? '/blog' : `/blog/page/${page}`),
-  blogPost: (slug: string) => `/blog/${slug}`,
-  blogTag: (tag: string) => `/blog/tags/${tag}`,
+  blog: () => '/blog/',
+  blogPage: (page: number) => (page <= 1 ? '/blog/' : `/blog/page/${page}/`),
+  blogPost: (slug: string) => `/blog/${slug}/`,
+  blogTag: (tag: string) => `/blog/tags/${tag}/`,
 
   rss: () => '/rss.xml',
 } as const;

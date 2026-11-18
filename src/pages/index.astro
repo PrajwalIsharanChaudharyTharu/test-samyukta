@@ -2,9 +2,17 @@
 import BaseLayout from '@layouts/BaseLayout.astro';
 import Container from '@components/layout/Container.astro';
 import Button from '@components/ui/Button.astro';
+import SectionHeading from '@components/ui/SectionHeading.astro';
+import ServiceCard from '@components/sections/ServiceCard.astro';
+import PostCard from '@components/sections/PostCard.astro';
+import CtaBanner from '@components/sections/CtaBanner.astro';
 import { pages } from '@config/pages';
 import { routes } from '@config/routes';
 import { site } from '@config/site';
+import { getServices, getLatestPosts } from '@lib/content';
+
+// Run the three reads in parallel instead of one after another.
+const [services, posts] = await Promise.all([getServices(), getLatestPosts(3)]);
 ---
 
 <BaseLayout seo={pages.home}>
@@ -22,4 +30,26 @@ import { site } from '@config/site';
       </div>
     </Container>
   </section>
+
+  <Container as="section" class="mt-24">
+    <SectionHeading eyebrow="What we do" title="Services" />
+    <div class="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {services.map((service) => (
+        <ServiceCard service={service} />
+      ))}
+    </div>
+  </Container>
+
+  {posts.length > 0 && (
+    <Container as="section" class="mt-24">
+      <SectionHeading eyebrow="Insights" title="From the blog" />
+      <div class="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {posts.map((post) => (
+          <PostCard post={post} />
+        ))}
+      </div>
+    </Container>
+  )}
+
+  <CtaBanner />
 </BaseLayout>

@@ -8,10 +8,8 @@
       "@/*": ["./src/*"],
       "@components/*": ["./src/components/*"],
       "@layouts/*": ["./src/layouts/*"],
-      "@pages/*": ["./src/pages/*"],
       "@styles/*": ["./src/styles/*"],
       "@config/*": ["./src/config/*"],
-      "@content/*": ["./src/content/*"],
       "@lib/*": ["./src/lib/*"]
     }
   }
