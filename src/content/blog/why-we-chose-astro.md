@@ -11,3 +11,5 @@ tags: [Astro, Performance]
 ## Zero JavaScript by default
 
 Most marketing pages do not need a client-side framework.
+
+Blogs can be written in md file and can export to use

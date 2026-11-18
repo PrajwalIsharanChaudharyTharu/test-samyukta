@@ -1,0 +1,42 @@
+---
+/** /blog/tags/<tag> — every post with that tag. */
+import type { GetStaticPaths } from 'astro';
+import PageLayout from '@layouts/PageLayout.astro';
+import Container from '@components/layout/Container.astro';
+import PostCard from '@components/sections/PostCard.astro';
+import { routes } from '@config/routes';
+import { getTags, type TagGroup } from '@lib/content';
+
+export const getStaticPaths = (async () => {
+  const tags = await getTags();
+  return tags.map((tag) => ({ params: { tag: tag.slug }, props: { tag } }));
+}) satisfies GetStaticPaths;
+
+interface Props {
+  tag: TagGroup;
+}
+
+const { tag } = Astro.props;
+
+const seo = {
+  title: `Articles about ${tag.label}`,
+  description: `All ${tag.posts.length} articles from our blog about ${tag.label}: guides, lessons learned and practical engineering advice.`,
+  // A tag with a single post is a thin page that duplicates the post. Keep it out of search.
+  noindex: tag.posts.length < 2,
+};
+---
+
+<PageLayout
+  seo={seo}
+  heading={`Tagged: ${tag.label}`}
+  breadcrumbs={[
+    { label: 'Blog', href: routes.blog() },
+    { label: tag.label, href: routes.blogTag(tag.slug) },
+  ]}
+>
+  <Container class="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+    {tag.posts.map((post) => (
+      <PostCard post={post} headingLevel="h2" />
+    ))}
+  </Container>
+</PageLayout>

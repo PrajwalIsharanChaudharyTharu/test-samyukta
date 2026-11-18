@@ -1,0 +1,130 @@
+---
+/**
+ * /blog/<slug> — one page per blog Markdown file.
+ */
+import type { GetStaticPaths } from 'astro';
+import { render } from 'astro:content';
+import { Image, getImage } from 'astro:assets';
+import PageLayout from '@layouts/PageLayout.astro';
+import Container from '@components/layout/Container.astro';
+import Badge from '@components/ui/Badge.astro';
+import SectionHeading from '@components/ui/SectionHeading.astro';
+import PostCard from '@components/sections/PostCard.astro';
+import { routes } from '@config/routes';
+import { getPosts, getRelatedPosts, type Post } from '@lib/content';
+import { formatDate, readingTime, slugify } from '@lib/utils';
+
+export const getStaticPaths = (async () => {
+  const posts = await getPosts();
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}) satisfies GetStaticPaths;
+
+interface Props {
+  post: Post;
+}
+
+const { post } = Astro.props;
+const { data } = post;
+const { Content, headings } = await render(post);
+const related = await getRelatedPosts(post, 3);
+
+// Social cards need a fixed 1200×630 image — generated from the cover at build time.
+const og = await getImage({ src: data.cover, width: 1200, height: 630, format: 'jpg', fit: 'cover' });
+
+const seo = {
+  title: data.seo?.title ?? data.title,
+  description: data.seo?.description ?? data.description,
+  ogImage: og.src,
+  ogImageAlt: data.coverAlt,
+  noindex: data.seo?.noindex,
+  article: {
+    publishedTime: data.pubDate,
+    modifiedTime: data.updatedDate,
+    authors: [data.author],
+    tags: data.tags,
+  },
+};
+
+const toc = headings.filter((h) => h.depth === 2);
+const minutes = readingTime(post.body);
+---
+
+<PageLayout
+  seo={seo}
+  heading={data.title}
+  intro={data.description}
+  breadcrumbs={[
+    { label: 'Blog', href: routes.blog() },
+    { label: data.title, href: routes.blogPost(post.id) },
+  ]}
+>
+  <p slot="header-extra" class="mt-6 flex flex-wrap gap-x-2 text-sm text-muted">
+    <span>{data.author}</span>
+    <span aria-hidden="true">·</span>
+    <time datetime={data.pubDate.toISOString()}>{formatDate(data.pubDate)}</time>
+    {data.updatedDate && (
+      <>
+        <span aria-hidden="true">·</span>
+        <span>
+          {'Updated '}
+          <time datetime={data.updatedDate.toISOString()}>{formatDate(data.updatedDate)}</time>
+        </span>
+      </>
+    )}
+    <span aria-hidden="true">·</span>
+    <span>{`${minutes} min read`}</span>
+  </p>
+
+  <Container class="mt-12">
+    <Image
+      src={data.cover}
+      alt={data.coverAlt}
+      width={1600}
+      height={900}
+      loading="eager"
+      fetchpriority="high"
+      class="aspect-video w-full rounded-(--radius-card) object-cover"
+    />
+  </Container>
+
+  <Container class="mt-12 grid gap-12 lg:grid-cols-4">
+    <article class="prose prose-lg max-w-none lg:col-span-3">
+      <Content />
+    </article>
+
+    <aside class="hidden lg:block">
+      {toc.length > 1 && (
+        <nav aria-label="On this page" class="sticky top-24 text-sm">
+          <p class="font-semibold">On this page</p>
+          <ul class="mt-3 space-y-2 text-muted">
+            {toc.map((h) => (
+              <li>
+                <a href={`#${h.slug}`} class="hover:text-brand-600">
+                  {h.text}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )}
+      {data.tags.length > 0 && (
+        <div class="mt-8 flex flex-wrap gap-2">
+          {data.tags.map((tag) => (
+            <Badge href={routes.blogTag(slugify(tag))}>{tag}</Badge>
+          ))}
+        </div>
+      )}
+    </aside>
+  </Container>
+
+  {related.length > 0 && (
+    <Container as="section" class="mt-24">
+      <SectionHeading title="Keep reading" />
+      <div class="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {related.map((p) => (
+          <PostCard post={p} />
+        ))}
+      </div>
+    </Container>
+  )}
+</PageLayout>
