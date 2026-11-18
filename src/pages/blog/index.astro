@@ -1,6 +1,28 @@
 ---
-import { getCollection } from 'astro:content';
-const x = await getCollection('blog');
+import PageLayout from '@layouts/PageLayout.astro';
+import Container from '@components/layout/Container.astro';
+import { pages } from '@config/pages';
+import { routes } from '@config/routes';
+import { getPosts } from '@lib/content';
+
+const posts = await getPosts();
 ---
 
-<a href="/about">About</a>
+<PageLayout
+  seo={pages.blog}
+  heading="Blog"
+  intro="Notes on engineering, design and building products."
+  breadcrumbs={[{ label: 'Blog', href: routes.blog() }]}
+>
+  <Container class="py-16">
+    <ul class="space-y-4">
+      {posts.map((post) => (
+        <li>
+          <a href={routes.blogPost(post.id)} class="font-semibold hover:text-brand-600">
+            {post.data.title}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </Container>
+</PageLayout>
