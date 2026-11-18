@@ -1,7 +1,10 @@
 ---
 import '@styles/global.css';
 import { cx } from '@lib/utils';
+import { site } from '@/config/site';
+
 const isActive = true;
+const socials = Object.entries(site.social);
 ---
 
 <html lang="en">
@@ -16,5 +19,66 @@ const isActive = true;
   <body>
     <h1>Astro</h1>
     <h1 class={cx('title', isActive && 'active')}>Alias works</h1>
+    <dl>
+      <div>
+        <dt>Tagline</dt>
+        <dd>{site.tagline}</dd>
+      </div>
+      <div>
+        <dt>Description</dt>
+        <dd>{site.description}</dd>
+      </div>
+      <div>
+        <dt>Legal Name</dt>
+        <dd>{site.legalName}</dd>
+      </div>
+      <div>
+        <dt>Email</dt>
+        <dd>{site.contact.email}</dd>
+      </div>
+      <div>
+        <dt>Phone</dt>
+        <dd>{site.contact.phone}</dd>
+      </div>
+    </dl>
+    <dl>
+      <div>
+        <dt>Address</dt>
+        <dd>{site.contact.address.street}</dd>
+      </div>
+      <div>
+        <dd>{site.contact.address.city}</dd>
+      </div>
+      <div>
+        <dd>{site.contact.address.region}</dd>
+      </div>
+      <div>
+        <dd>{site.contact.address.postalCode}</dd>
+      </div>
+      <div>
+        <dd>{site.contact.address.country}</dd>
+      </div>
+    </dl>
+    <dl>
+      <div>
+        <dt>Website</dt>
+        <dd>{Astro.site?.href}</dd>
+      </div>
+      <div>
+        <dt>Founding Year</dt>
+        <dd>{site.foundingYear}</dd>
+      </div>
+    </dl>
+
+    <ul class="mt-8 flex gap-4">
+      {socials.map(([name, url]) => (
+        <li>
+          <a href={url} class="text-brand-600 capitalize">
+            {name}
+          </a>
+        </li>
+      ))}
+    </ul>
   </body>
+  <footer class="mt-16 text-sm text-muted">{`© ${new Date().getFullYear()} ${site.legalName}`}</footer>
 </html>
