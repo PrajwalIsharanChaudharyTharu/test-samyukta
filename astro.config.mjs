@@ -15,7 +15,12 @@ if (!SITE_URL) {
 // https://astro.build/config
 export default defineConfig({
   site: SITE_URL ?? 'https://www.example.com',
+  output: 'static',
   vite: {
     plugins: [tailwindcss()],
+  },
+  trailingSlash: 'never',
+  build: {
+    format: 'file',
   },
 });
