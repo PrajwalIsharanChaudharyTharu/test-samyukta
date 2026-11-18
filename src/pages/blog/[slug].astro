@@ -13,6 +13,7 @@ import PostCard from '@components/sections/PostCard.astro';
 import { routes } from '@config/routes';
 import { getPosts, getRelatedPosts, type Post } from '@lib/content';
 import { formatDate, readingTime, slugify } from '@lib/utils';
+import { blogPostingSchema } from '@lib/schema';
 
 export const getStaticPaths = (async () => {
   const posts = await getPosts();
@@ -44,6 +45,22 @@ const seo = {
     tags: data.tags,
   },
 };
+const url = routes.blogPost(post.id);
+const schema = [
+  blogPostingSchema(
+    {
+      title: data.title,
+      description: seo.description,
+      url,
+      image: og.src,
+      datePublished: data.pubDate,
+      dateModified: data.updatedDate,
+      authorName: data.author,
+      tags: data.tags,
+    },
+    Astro.site!,
+  ),
+];
 
 const toc = headings.filter((h) => h.depth === 2);
 const minutes = readingTime(post.body);
@@ -57,6 +74,7 @@ const minutes = readingTime(post.body);
     { label: 'Blog', href: routes.blog() },
     { label: data.title, href: routes.blogPost(post.id) },
   ]}
+  schema={schema}
 >
   <p slot="header-extra" class="mt-6 flex flex-wrap gap-x-2 text-sm text-muted">
     <span>{data.author}</span>

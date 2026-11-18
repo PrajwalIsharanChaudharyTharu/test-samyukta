@@ -2,6 +2,7 @@
 import { defineConfig } from 'astro/config';
 import { loadEnv } from 'vite';
 import tailwindcss from '@tailwindcss/vite';
+import sitemap from '@astrojs/sitemap';
 
 import mdx from '@astrojs/mdx';
 
@@ -43,5 +44,10 @@ export default defineConfig({
     defaultStrategy: 'hover',
   },
 
-  integrations: [mdx()],
+  integrations: [
+    mdx(),
+    sitemap({
+      filter: (page) => !/\/404$/.test(page) && !page.includes('/blog/page/'),
+    }),
+  ],
 });

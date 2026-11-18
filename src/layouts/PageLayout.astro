@@ -8,18 +8,20 @@ import Container from '@components/layout/Container.astro';
 import Breadcrumbs from '@components/layout/Breadcrumbs.astro';
 import type { PageSeo } from '@lib/seo';
 import type { Crumb } from '@lib/nav';
+import type { JsonLdObject } from '@lib/schema';
 
 interface Props {
   seo: PageSeo;
   heading: string;
   intro?: string | undefined;
   breadcrumbs?: Crumb[];
+  schema?: JsonLdObject[];
 }
 
-const { seo, heading, intro, breadcrumbs = [] } = Astro.props;
+const { seo, heading, intro, breadcrumbs = [], schema = [] } = Astro.props;
 ---
 
-<BaseLayout seo={seo}>
+<BaseLayout seo={seo} breadcrumbs={breadcrumbs} schema={schema}>
   <slot name="head" slot="head" />
 
   <header class="border-b border-line bg-surface">

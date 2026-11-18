@@ -9,6 +9,7 @@ import Container from '@components/layout/Container.astro';
 import CtaBanner from '@components/sections/CtaBanner.astro';
 import { routes } from '@config/routes';
 import { getServices, type Service } from '@lib/content';
+import { serviceSchema } from '@lib/schema';
 
 export const getStaticPaths = (async () => {
   const services = await getServices();
@@ -26,6 +27,7 @@ const { service } = Astro.props;
 const { data } = service;
 const { Content } = await render(service);
 
+const url = routes.service(service.id);
 const seo = {
   title: data.seo?.title ?? `${data.title} Services`,
   description: data.seo?.description ?? data.summary,
@@ -41,6 +43,7 @@ const seo = {
     { label: 'Services', href: routes.services() },
     { label: data.title, href: routes.service(service.id) },
   ]}
+  schema={[serviceSchema({ title: data.title, description: seo.description, url: url }, Astro.site!)]}
 >
   <Container class="grid gap-12 py-16 lg:grid-cols-3">
     <div class="prose prose-lg max-w-none lg:col-span-2">

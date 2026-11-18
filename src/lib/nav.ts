@@ -20,7 +20,7 @@ export function normalizePath(pathname: string): string {
 export function isActivePath(currentPath: string, href: string): boolean {
   const path = normalizePath(currentPath);
   if (href === routes.home()) return path === '/';
-  return path === href || path.startsWith(`${href}/`);
+  return path.startsWith(href);
 }
 export interface Crumb {
   label: string;

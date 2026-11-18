@@ -1,0 +1,17 @@
+---
+/**
+ * Renders schema.org objects as JSON-LD.
+ * "<" is escaped so content (e.g. a post title containing "</script>") can never break out of the tag.
+ */
+import type { JsonLdObject } from '@lib/schema';
+
+interface Props {
+  schema: JsonLdObject[];
+}
+
+const { schema } = Astro.props;
+---
+
+{schema.map((item) => (
+  <script type="application/ld+json" set:html={JSON.stringify(item).replace(/</g, '\\u003c')} />
+))}

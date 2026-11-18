@@ -10,12 +10,28 @@ import type { PageSeo } from '@lib/seo';
 import SEO from '@components/seo/SEO.astro';
 import Header from '@components/layout/Header.astro';
 import Footer from '@components/layout/Footer.astro';
+import type { Crumb } from '@lib/nav';
+import { organizationSchema, websiteSchema, breadcrumbSchema, type JsonLdObject } from '@lib/schema';
+import JsonLd from '@components/seo/JsonLd.astro';
 
 interface Props {
   seo: PageSeo;
+  /** Breadcrumb trail WITHOUT Home (Home is prepended here). Drives the BreadcrumbList schema. */
+  breadcrumbs?: Crumb[];
+  /** Extra page-specific schema.org objects (Service, BlogPosting...). */
+  schema?: JsonLdObject[];
 }
 
-const { seo } = Astro.props;
+const { seo, breadcrumbs = [], schema = [] } = Astro.props;
+const siteUrl = Astro.site!;
+
+const crumbs: Crumb[] = breadcrumbs.length ? [{ label: 'Home', href: routes.home() }, ...breadcrumbs] : [];
+const jsonLd: JsonLdObject[] = [
+  organizationSchema(siteUrl),
+  websiteSchema(siteUrl),
+  ...(crumbs.length ? [breadcrumbSchema(crumbs, siteUrl)] : []),
+  ...schema,
+];
 ---
 
 <!doctype html>
@@ -28,6 +44,7 @@ const { seo } = Astro.props;
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="alternate" type="application/rss+xml" title={`${site.name} Blog`} href={routes.rss()} />
     <SEO seo={seo} />
+    <JsonLd schema={jsonLd} />
     <!-- Escape hatch: a page can add extra <head> tags with slot="head" -->
     <slot name="head" />
   </head>
