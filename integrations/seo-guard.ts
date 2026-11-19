@@ -69,6 +69,16 @@ export default function seoGuard(): AstroIntegration {
             continue; // noindex pages skip the content rules below
           }
 
+          // ── 6. generic link text (Lighthouse "link-text" audit)
+          const GENERIC = /^(click here|here|read more|learn more|more|more info|see more|go|start|this)$/i;
+          for (const [, inner] of html.matchAll(/<a\s[^>]*>([\s\S]*?)<\/a>/g)) {
+            const text = (inner ?? '')
+              .replace(/<[^>]+>/g, '')
+              .replace(/[→←»›]/g, '')
+              .trim();
+            if (GENERIC.test(text)) errors.push(`${url}: non-descriptive link text "${text}"`);
+          }
+
           // ── 1–2. required tags
           const title = pick(html, /<title>([^<]*)<\/title>/);
           const description = pick(html, /<meta name="description" content="([^"]*)"/);
