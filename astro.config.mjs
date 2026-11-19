@@ -5,6 +5,7 @@ import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
 
 import mdx from '@astrojs/mdx';
+import seoGuard from './integrations/seo-guard';
 
 // .env files are NOT loaded into process.env when this config file runs,
 // so we load them explicitly. CI/host env vars still win over .env.
@@ -49,5 +50,6 @@ export default defineConfig({
     sitemap({
       filter: (page) => !/\/404$/.test(page) && !page.includes('/blog/page/'),
     }),
+    seoGuard(),
   ],
 });

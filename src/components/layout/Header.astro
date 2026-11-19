@@ -6,7 +6,13 @@ import Container from './Container.astro';
 import Button from '@components/ui/Button.astro';
 
 const path = Astro.url.pathname;
-const mobileNav = [...mainNav, { label: 'Start a project', href: routes.contact() }];
+// const mobileNav = [
+//   ...mainNav,
+//   {
+//     label: 'Start a project',
+//     href: routes.contact(),
+//   },
+// ];
 ---
 
 <header class="sticky top-0 z-40 border-b border-line bg-white/90 backdrop-blur">
@@ -32,9 +38,7 @@ const mobileNav = [...mainNav, { label: 'Start a project', href: routes.contact(
     </nav>
 
     <div class="hidden md:block">
-      <Button href={routes.contact()} size="sm">
-        Start a project
-      </Button>
+      <Button size="sm">Start a project</Button>
     </div>
 
     <!-- Mobile: native <details>, so no JavaScript is shipped -->
@@ -42,7 +46,7 @@ const mobileNav = [...mainNav, { label: 'Start a project', href: routes.contact(
       <summary class="cursor-pointer list-none rounded-md px-3 py-2 text-sm font-medium [&::-webkit-details-marker]:hidden">
         Menu
       </summary>
-      <nav
+      <!-- <nav
         aria-label="Mobile"
         class="absolute right-0 mt-2 w-56 rounded-(--radius-card) border border-line bg-white p-3 shadow-lg"
       >
@@ -59,7 +63,7 @@ const mobileNav = [...mainNav, { label: 'Start a project', href: routes.contact(
             </li>
           ))}
         </ul>
-      </nav>
+      </nav> -->
     </details>
   </Container>
 </header>

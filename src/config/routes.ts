@@ -8,13 +8,13 @@
 export const routes = {
   home: () => '/',
   about: () => '/about/',
-  contact: () => '/contact/',
+  // contact: () => '/contact/',
 
   services: () => '/services/',
   service: (slug: string) => `/services/${slug}/`,
 
-  projects: () => '/projects/',
-  project: (slug: string) => `/projects/${slug}/`,
+  // projects: () => '/projects/',
+  // project: (slug: string) => `/projects/${slug}/`,
 
   blog: () => '/blog/',
   blogPage: (page: number) => (page <= 1 ? '/blog/' : `/blog/page/${page}/`),
@@ -41,7 +41,7 @@ export interface NavGroup {
 /** Header navigation. Array order = display order. */
 export const mainNav = [
   { label: 'Services', href: routes.services() },
-  { label: 'Projects', href: routes.projects() },
+  // { label: 'Projects', href: routes.projects() },
   { label: 'About', href: routes.about() },
   { label: 'Blog', href: routes.blog() },
 ] as const satisfies readonly NavItem[];
@@ -52,14 +52,14 @@ export const footerNav = [
     title: 'Company',
     links: [
       { label: 'About', href: routes.about() },
-      { label: 'Contact', href: routes.contact() },
+      // { label: 'Contact', href: routes.contact() },
     ],
   },
   {
     title: 'Work',
     links: [
       { label: 'Services', href: routes.services() },
-      { label: 'Projects', href: routes.projects() },
+      // { label: 'Projects', href: routes.projects() },
     ],
   },
   {

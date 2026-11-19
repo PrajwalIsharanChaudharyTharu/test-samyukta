@@ -1,13 +1,13 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
 import Container from '@components/layout/Container.astro';
-import Button from '@components/ui/Button.astro';
+// import Button from '@components/ui/Button.astro';
 import SectionHeading from '@components/ui/SectionHeading.astro';
 import ServiceCard from '@components/sections/ServiceCard.astro';
 import PostCard from '@components/sections/PostCard.astro';
 import CtaBanner from '@components/sections/CtaBanner.astro';
 import { pages } from '@config/pages';
-import { routes } from '@config/routes';
+// import { routes } from '@config/routes';
 import { site } from '@config/site';
 import { getServices, getLatestPosts } from '@lib/content';
 
@@ -21,12 +21,12 @@ const [services, posts] = await Promise.all([getServices(), getLatestPosts(3)]);
       <h1 class="max-w-3xl text-4xl font-bold tracking-tight text-balance md:text-6xl">{site.tagline}</h1>
       <p class="mt-6 max-w-2xl text-lg text-muted md:text-xl">{site.description}</p>
       <div class="mt-10 flex flex-wrap gap-4">
-        <Button href={routes.contact()} size="lg">
+        <!-- <Button href={routes.contact()} size="lg">
           Start a project
         </Button>
         <Button href={routes.projects()} size="lg" variant="secondary">
           See our work
-        </Button>
+        </Button> -->
       </div>
     </Container>
   </section>

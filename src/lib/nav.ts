@@ -10,7 +10,7 @@ export function normalizePath(pathname: string): string {
     .replace(/\.html$/, '')
     .replace(/\/index$/, '')
     .replace(/\/+$/, '');
-  return clean === '' ? '/' : clean;
+  return clean === '' ? '/' : `${clean}/`;
 }
 
 /**
