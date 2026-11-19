@@ -27,3 +27,6 @@ pnpm-debug.log*
 
 # Lighthouse CI reports
 .lighthouseci/
+
+#VS code 
+.vscode/

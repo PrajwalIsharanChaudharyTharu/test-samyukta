@@ -2,6 +2,9 @@
 
 Static, SEO-first corporate site built with **Astro 7**, **Tailwind CSS v4** and **TypeScript (strictest)**.
 
+> **New here?** Read the [Project Handbook](./docs/handbook/README.md): every config file, the `src/` architecture,
+> SEO patterns, the design system and step-by-step recipes for adding pages and content.
+
 ---
 
 ## Getting started
