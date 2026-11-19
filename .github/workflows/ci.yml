@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [master]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    env:
+      SITE_URL: https://samyuktatechnology.com
+      # Lighthouse's SEO audit fails on "Disallow: /", so CI builds as production.
+      # This build is only tested, never deployed.
+      DEPLOY_ENV: production
+      # The "prepare" script runs husky; skip installing git hooks on the CI machine.
+      HUSKY: 0
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install (exact versions from package-lock.json)
+        run: npm ci
+
+      - name: Formatting
+        run: npm run lint:format
+
+      - name: Boundaries, types, build and SEO guard
+        run: npm run build
+
+      - name: Lighthouse budgets
+        run: npm run lighthouse
+
+      - name: Upload Lighthouse reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-reports
+          path: .lighthouseci
